@@ -1,0 +1,19 @@
+
+
+input:focus {
+    border-color: rgb(255, 217, 3);
+}
+input:valid {
+    border-color: green;
+    border-width: 5px;
+    background-color: rgba(0, 128, 0, 0.358);
+    transition: opacity 0.3s, visibility 0s 0.3s;
+}
+input:invalid {
+    border-color: red;
+    border-width: 5px;
+    background-color: red;
+}
+input:not(:focus):invalid {
+    background-color: rgba(255, 0, 30, 0.637);
+}
