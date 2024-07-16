@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useMemo } from "react";
+import React, { useContext, useEffect, useMemo, useCallback } from "react";
 import { AgGridReact } from "ag-grid-react";
 import Context from "../context/MiContext";
 
@@ -46,18 +46,18 @@ const MiAllocationTable = () => {
     //             <FcFullTrash size="35" /></button> </>)
     // }
 
-    const onIncrement = (rowIndex, allocatedBudget) => {
+    const onIncrement = useCallback((rowIndex, allocatedBudget) => {
         dispatch({ type: ACTIONS.ADD_EXPENSE_10, payload: { rowIndex, allocatedBudget, newBudget } });
-    };
-    const onDecrement = (rowIndex, allocatedBudget) => {
+    }, [dispatch, newBudget]);
+    const onDecrement = useCallback((rowIndex, allocatedBudget) => {
         dispatch({ type: ACTIONS.REDUCE_EXPENSE_10, payload: { rowIndex, allocatedBudget, newBudget } });
-    };
+    }, [dispatch, newBudget]);
 
-    const onDelete = (rowIndex) => {
+    const onDelete = useCallback((rowIndex) => {
         dispatch({ type: ACTIONS.DELETE_EXPENSE, payload: { rowIndex } });
-    };
+    }, [dispatch]);
 
-    const onCellValueChanged = (params) => {
+    const onCellValueChanged = useCallback((params) => {
         const maxValue = 20000;
         const maxDigits = 5;
         const { newValue, oldValue } = params;
@@ -71,7 +71,7 @@ const MiAllocationTable = () => {
                 payload: { rowIndex: params.node.rowIndex, newValue, oldValue, newBudget, remaining }
             });
         }
-    };
+    }, [dispatch, newBudget, remaining]);
 
     const ColumnDataTable = useMemo(() => [
         { headerName: "ID", field: "id", flex: 1, hide: true, },
@@ -95,7 +95,7 @@ const MiAllocationTable = () => {
             headerName: "Delete", field: "delete",
             cellRenderer: renderCellButton(FcFullTrash, onDelete), flex: 1,
         },
-    ], [onIncrement, onDecrement, onDelete, currency])
+    ], [onIncrement, onDecrement, onDelete, currency, onCellValueChanged])
 
     return (
         <>
