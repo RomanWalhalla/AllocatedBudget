@@ -15,6 +15,7 @@ import { AppReducer } from "./Reducer/Reducer"
 
 import { RowDataTable } from "./MiComponents/MiAllocationTable";
 import Currency from "./MiComponents/Currency";
+import Footer from "./MiComponents/Footer";
 // import TableGPT from "./Reducer/TableGPT";
 
 const MiApp = () => {
@@ -35,6 +36,7 @@ const MiApp = () => {
     // }
 
     return (
+        <>
         <Context.Provider value={{
             newBudget,
             setNewBudget,
@@ -71,7 +73,6 @@ const MiApp = () => {
                     <div>
                         <Currency />
                     </div>
-
                 </section>
                 <section className="miAllocationTable">
                     <h2 className="nameAllocation">Allocation</h2>
@@ -89,6 +90,8 @@ const MiApp = () => {
             <br />
             <br />
         </Context.Provider>
+        <Footer />
+        </>
     );
 }
 
